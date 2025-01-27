@@ -1,0 +1,150 @@
+-- Customer table
+CREATE TABLE Customer (
+  CustomerID NUMBER PRIMARY KEY,
+  Name VARCHAR2(50) NOT NULL,
+  Email VARCHAR2(100) UNIQUE NOT NULL,
+  PhoneNumber VARCHAR2(20),
+   FOREIGN KEY (CustomerID) REFERENCES Address(AddressID)
+);
+
+
+-- Address table
+CREATE TABLE Address (
+  AddressID NUMBER PRIMARY KEY,
+  Street VARCHAR2(100) NOT NULL,
+  City VARCHAR2(50) NOT NULL,
+  State VARCHAR2(50),
+  Country VARCHAR2(50) NOT NULL,
+  ZipCode VARCHAR2(10)
+);
+
+
+-- Product table
+CREATE TABLE Product (
+  ProductID NUMBER PRIMARY KEY,
+  Name VARCHAR2(100) NOT NULL,
+  Description VARCHAR2(2000),
+  Price NUMBER(10,2) NOT NULL,
+  Stock NUMBER,
+  CategoryID NUMBER,
+  BrandID NUMBER,
+   FOREIGN KEY (CategoryID) REFERENCES Category(CategoryID),
+   FOREIGN KEY (BrandID) REFERENCES Brand(BrandID)
+);
+
+
+-- Category table
+CREATE TABLE Category (
+  CategoryID NUMBER PRIMARY KEY,
+  Name VARCHAR2(50) NOT NULL,
+  Description VARCHAR2(200)
+);
+
+
+
+
+-- SubCategory table
+CREATE TABLE SubCategory (
+  SubcategoryID NUMBER PRIMARY KEY,
+  Name VARCHAR2(50) NOT NULL,
+  Description VARCHAR2(200),
+  CategoryID NUMBER NOT NULL,
+   FOREIGN KEY (CategoryID) REFERENCES Category(CategoryID)
+);
+
+-- Image table
+CREATE TABLE Image (
+  ImageID NUMBER PRIMARY KEY,
+  URL VARCHAR2(255) NOT NULL,
+  ProductID NUMBER,
+  FOREIGN KEY (ProductID) REFERENCES Product(ProductID)
+);
+
+-- Order table
+CREATE TABLE Order1 (
+  OrderID NUMBER PRIMARY KEY,
+  CustomerID NUMBER NOT NULL,
+  OrderDate DATE NOT NULL,
+  Status VARCHAR2(20) NOT NULL,
+   FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
+);
+
+-- OrderItem table
+CREATE TABLE OrderItem (
+  OrderItemID NUMBER PRIMARY KEY,
+  OrderID NUMBER NOT NULL,
+  ProductID NUMBER NOT NULL,
+  Quantity NUMBER NOT NULL,
+  Price NUMBER(10,2) NOT NULL,
+   FOREIGN KEY (OrderID) REFERENCES Order1(OrderID),
+   FOREIGN KEY (ProductID) REFERENCES Product(ProductID)
+);
+
+-- Payment table
+CREATE TABLE Payment (
+  PaymentID NUMBER PRIMARY KEY,
+  OrderID NUMBER NOT NULL,
+  PaymentMethod VARCHAR2(50) NOT NULL,
+  Amount NUMBER(10,2) NOT NULL,
+   FOREIGN KEY (OrderID) REFERENCES Order1(OrderID)
+);
+
+
+-- Shipping table
+CREATE TABLE Shipping (
+  ShippingID NUMBER PRIMARY KEY,
+  OrderID NUMBER NOT NULL,
+  AddressID NUMBER NOT NULL,
+  ShippingMethod VARCHAR2(50) NOT NULL,
+  Cost NUMBER(10,2) NOT NULL,
+   FOREIGN KEY (OrderID) REFERENCES Order1(OrderID),
+   FOREIGN KEY (AddressID) REFERENCES Address(AddressID)
+);
+
+
+-- Review table
+CREATE TABLE Review (
+  ReviewID NUMBER PRIMARY KEY,
+  CustomerID NUMBER NOT NULL,
+  ProductID NUMBER NOT NULL,
+  Rating NUMBER NOT NULL,
+  Text VARCHAR2(2000),
+   FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID),
+   FOREIGN KEY (ProductID) REFERENCES Product(ProductID)
+);
+
+-- Wishlist table
+CREATE TABLE Wishlist (
+  WishlistID NUMBER PRIMARY KEY,
+  CustomerID NUMBER NOT NULL,
+  ProductID NUMBER NOT NULL,
+   FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID),
+   FOREIGN KEY (ProductID) REFERENCES Product(ProductID)
+);
+
+-- Cart table
+CREATE TABLE Cart (
+  CartID NUMBER PRIMARY KEY,
+  CustomerID NUMBER NOT NULL,
+  ProductID NUMBER NOT NULL,
+  Quantity NUMBER NOT NULL,
+   FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID),
+   FOREIGN KEY (ProductID) REFERENCES Product(ProductID)
+);
+
+--Brand table
+CREATE TABLE Brand (
+  BrandID NUMBER PRIMARY KEY,
+  Name VARCHAR2(50) NOT NULL,
+  Description VARCHAR2(200)
+);
+
+--Promotion table
+CREATE TABLE Promotion (
+  PromotionID NUMBER PRIMARY KEY,
+  Name VARCHAR2(50) NOT NULL,
+  Description VARCHAR2(200),
+  StartDate DATE NOT NULL,
+  EndDate DATE NOT NULL,
+  Discount NUMBER(10,2) NOT NULL
+);
