@@ -1,0 +1,32 @@
+ENTITIES AND THEIR ATTRIBUTES:
+
+	Customer:
+(CustomerID, Name, Email, PhoneNumber, Address)
+	Address: 
+(AddressID, Street, City, State, Country, ZipCode)
+	Product: 
+(ProductID, Name, Description, Price, Stock)
+	Category: 
+(CategoryID, Name, Description)
+	SubCategory: 
+(SubcategoryID, Name, Description, CategoryID (FK))
+	Image: 
+(ImageID, URL, ProductID (FK))
+	Order: 
+(OrderID, CustomerID (FK), OrderDate, Status)
+	Order Item: 
+(OrderItemID, OrderID (FK), ProductID (FK), Quantity, Price)
+	Payment: 
+(PaymentID, OrderID (FK), PaymentMethod, Amount)
+	Shipping: 
+(ShippingID, OrderID (FK), AddressID (FK), ShippingMethod, Cost)
+	Review: 
+(ReviewID, CustomerID (FK), ProductID (FK), Rating, Text)
+	Wishlist: 
+(WishlistID, CustomerID (FK), ProductID (FK))
+	Cart:
+(CartID, CustomerID (FK), ProductID (FK), Quantity)
+	Brand: 
+(BrandID, Name, Description)
+	Promotion: 
+(PromotionID, Name, Description, StartDate, EndDate, Discount)
